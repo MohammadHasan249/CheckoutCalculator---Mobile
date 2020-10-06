@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Checkout Price Calculator</string>
+    <string name="add_discount">Add Discount</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="enter_voucher_code">Enter Voucher Code</string>
+    <string name="add_tax">Add Tax</string>
+    <string name="cart">Cart</string>
 </resources>

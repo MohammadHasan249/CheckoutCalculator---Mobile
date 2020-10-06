@@ -5,4 +5,6 @@
     <string name="enter_voucher_code">Enter Voucher Code</string>
     <string name="add_tax">Add Tax</string>
     <string name="cart">Cart</string>
+    <string name="quantity_0">Quantity: 0</string>
+    <string name="_146_99">$146.99</string>
 </resources>

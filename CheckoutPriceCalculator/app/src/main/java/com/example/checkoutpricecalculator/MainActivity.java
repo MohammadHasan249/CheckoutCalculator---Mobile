@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -63,15 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
-            public void onAddButtonClick(int position) {
+            public void onAddButtonClick(int position, TextView textQuantity) {
                 mainItems.get(position).addToCart();
-                // either update the cart, or dont if mainItems is binded to the cart UI
+                textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
             }
 
             @Override
-            public void onRemoveButtonClick(int position) {
+            public void onRemoveButtonClick(int position, TextView textQuantity) {
                 mainItems.get(position).removeFromCart();
-                // either update the cart, or dont if mainItems is binded to the cart UI
+                textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
             }
         });
     }

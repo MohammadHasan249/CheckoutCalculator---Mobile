@@ -67,7 +67,6 @@
             android:text="@string/add"
             android:textColor="@color/addButtonColor"
             android:textSize="40sp"
-            android:onClick="onAddButtonClick"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +80,6 @@
             android:text="@string/remove"
             android:textColor="@color/removeButtonColor"
             android:textSize="40sp"
-            android:onClick="onRemoveButtonClick"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

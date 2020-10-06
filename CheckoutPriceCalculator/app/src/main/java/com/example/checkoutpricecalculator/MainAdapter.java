@@ -21,8 +21,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onAddButtonClick(int position);
-        void onRemoveButtonClick(int position);
+        void onAddButtonClick(int position, TextView textQuantity);
+        void onRemoveButtonClick(int position, TextView textQuantity);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -76,13 +76,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             removeButton = itemView.findViewById(R.id.removeButton);
 
             //used to be itemView
-            itemView.setOnClickListener(new View.OnClickListener() {
+            addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onAddButtonClick(position);
+                            mListener.onAddButtonClick(position, textQuantity);
                         }
                     }
                 }
@@ -94,7 +94,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onRemoveButtonClick(position);
+                            mListener.onRemoveButtonClick(position, textQuantity);
                         }
                     }
                 }

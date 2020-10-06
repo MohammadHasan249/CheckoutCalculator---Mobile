@@ -7,4 +7,6 @@
     <string name="cart">Cart</string>
     <string name="quantity_0">Quantity: 0</string>
     <string name="_146_99">$146.99</string>
+    <string name="add">+</string>
+    <string name="remove">-</string>
 </resources>

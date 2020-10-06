@@ -1,5 +1,6 @@
 package com.example.checkoutpricecalculator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,12 +13,13 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
-//    private Button taxButton = (Button) findViewById(R.id.addTax);
-    private EditText taxNumber;
-    private EditText discountCode;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     ArrayList<MainItem> mainItems;
     MainAdapter mainAdapter;
@@ -26,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        taxNumber = (EditText) findViewById(R.id.taxNumber);
-        discountCode = (EditText) findViewById(R.id.discountCode);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -61,13 +60,31 @@ public class MainActivity extends AppCompatActivity {
 
         mainAdapter = new MainAdapter(MainActivity.this, mainItems);
         recyclerView.setAdapter(mainAdapter);
+
+        mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+            @Override
+            public void onAddButtonClick(int position) {
+                mainItems.get(position).addToCart();
+                // either update the cart, or dont if mainItems is binded to the cart UI
+            }
+
+            @Override
+            public void onRemoveButtonClick(int position) {
+                mainItems.get(position).removeFromCart();
+                // either update the cart, or dont if mainItems is binded to the cart UI
+            }
+        });
     }
 
-    public void taxClick(View view) {
-        taxNumber.setVisibility(View.VISIBLE);
-    }
-
-    public void discountClick(View view) {
-        discountCode.setVisibility(View.VISIBLE);
+    public void checkoutClick(@NonNull View view) {
+        boolean isEmpty = true;
+        for(int i = 0; i < mainItems.size(); i++){
+            if (mainItems.get(i).getQuantity() != 0){
+                isEmpty = false;
+            }
+        }
+        if (!isEmpty){
+            // proceed to 2nd page.java
+        }
     }
 }

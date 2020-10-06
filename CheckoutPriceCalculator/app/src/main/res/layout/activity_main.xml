@@ -5,52 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/customColor"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="10dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/addTax"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/add_tax"
-        android:onClick="taxClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/taxNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="2dp"
-        android:width="40dp"
-        android:ems="14"
-        android:inputType="number"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTax" />
-
-    <Button
-        android:id="@+id/addDiscount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
-        android:text="@string/add_discount"
-        android:onClick="discountClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTax" />
 
     <TextView
         android:id="@+id/addToCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="132dp"
-        android:layout_marginBottom="320dp"
+        android:layout_marginBottom="588dp"
         android:text="@string/add_to_cart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="28sp"
@@ -60,39 +26,43 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="393dp"
-        android:layout_height="253dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="392dp"
+        android:layout_height="226dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addToCart" />
-
-    <EditText
-        android:id="@+id/discountCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:autofillHints=""
-        android:ems="8"
-        android:hint="@string/enter_voucher_code"
-        android:inputType="textPersonName"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDiscount" />
 
     <TextView
         android:id="@+id/shoppingCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="156dp"
         android:text="@string/cart"
-        android:textSize="28sp"
+        android:textSize="40sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
+
+    <ListView
+        android:id="@+id/listItems"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shoppingCart" />
+
+    <Button
+        android:id="@+id/checkoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/checkout"
+        android:onClick="checkoutClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listItems" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

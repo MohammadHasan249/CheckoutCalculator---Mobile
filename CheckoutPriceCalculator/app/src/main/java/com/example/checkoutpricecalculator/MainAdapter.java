@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     ArrayList<MainItem> mainItems;
     Context context;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onAddButtonClick(int position);
+        void onRemoveButtonClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public MainAdapter(Context context, ArrayList<MainItem> mainItems) {
         this.context = context;
@@ -50,6 +62,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         TextView textView;
         TextView textPrice;
         TextView textQuantity;
+        Button addButton;
+        Button removeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +72,34 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             textView = itemView.findViewById(R.id.text_view);
             textPrice = itemView.findViewById(R.id.text_price);
             textQuantity = itemView.findViewById(R.id.text_quantity);
+            addButton = itemView.findViewById(R.id.addButton);
+            removeButton = itemView.findViewById(R.id.removeButton);
+
+            //used to be itemView
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onAddButtonClick(position);
+                        }
+                    }
+                }
+            });
+
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onRemoveButtonClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 }

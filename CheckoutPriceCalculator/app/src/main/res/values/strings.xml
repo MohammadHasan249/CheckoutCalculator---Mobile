@@ -9,4 +9,10 @@
     <string name="_146_99">$146.99</string>
     <string name="add">+</string>
     <string name="remove">-</string>
+    <string name="checkout">Checkout</string>
+    <string name="base_price">Base Price:</string>
+    <string name="tax">Tax:</string>
+    <string name="final_price">Final Price:</string>
+    <string name="confirm_checkout">Confirm Checkout</string>
+    <string name="taxPercent">Tax %</string>
 </resources>

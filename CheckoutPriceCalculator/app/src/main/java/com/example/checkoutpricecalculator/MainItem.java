@@ -13,6 +13,14 @@ public class MainItem {
         this.itemQuantity = 0;
     }
 
+    public void addToCart() { itemQuantity++; }
+
+    public void removeFromCart() {
+        if(itemQuantity > 0){
+            itemQuantity--;
+        }
+    }
+
     public Integer getItemPic() {
         return itemPic;
     }
@@ -24,6 +32,8 @@ public class MainItem {
     public String getItemPrice() {
         return "$" + itemPrice;
     }
+
+    public int getQuantity() { return itemQuantity; }
 
     public String getItemQuantity() {
         return String.valueOf(itemQuantity);

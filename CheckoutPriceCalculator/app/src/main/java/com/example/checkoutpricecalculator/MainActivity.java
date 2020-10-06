@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<MainItem> mainItems;
     MainAdapter mainAdapter;
+    ArrayList<MainItem> cartItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +67,32 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onAddButtonClick(int position, TextView textQuantity) {
-                mainItems.get(position).addToCart();
+                mainItems.get(position).addToCart(textQuantity);
                 textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
+                updateCart();
             }
 
             @Override
             public void onRemoveButtonClick(int position, TextView textQuantity) {
-                mainItems.get(position).removeFromCart();
+                mainItems.get(position).removeFromCart(textQuantity);
                 textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
+                updateCart();
             }
         });
+    }
+
+    public void updateCart(){
+        // updates the cart shown
+    }
+
+    public ArrayList<MainItem> getCartItems() {
+        for (int i = 0; i < mainItems.size(); i++) {
+            MainItem item = mainItems.get(i);
+            if (item.getQuantity() > 0) {
+                cartItems.add(item);
+            }
+        }
+        return cartItems;
     }
 
     public void checkoutClick(@NonNull View view) {
@@ -85,7 +103,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (!isEmpty){
-            // proceed to 2nd page.java
+            // proceed to 2nd page
+            Intent myIntent = new Intent(getBaseContext(), checkoutPage.class);
+            ArrayList<MainItem> itemsInCart = getCartItems();
+            myIntent.putParcelableArrayListExtra("cartItems", itemsInCart);
+            startActivity(myIntent);
         }
     }
 }

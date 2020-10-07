@@ -98,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
     public void updateCart(MainItem item, boolean increased){
         if (increased) {
             cartItems.add(item);
-            if (item.getQuantity() > 1) {
-                int temp_quantity = item.getQuantity() - 1;
-                int index = cartItemNames.indexOf(item.getItemName() + " x" + temp_quantity);
+            int index = containsItem(item);
+            if (index != -1) {
                 cartItemNames.set(index, item.getItemName() + " x" + item.getItemQuantity());
             }
             else {
@@ -121,13 +120,18 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapter.notifyDataSetChanged();
     }
 
-    public ArrayList<MainItem> getCartItems() {
-        for (int i = 0; i < mainItems.size(); i++) {
-            MainItem item = mainItems.get(i);
-            if (item.getQuantity() > 0) {
-                cartItems.add(item);
+
+    public int containsItem(MainItem item) {
+        for (int i = 0; i < cartItemNames.size(); i++) {
+            String itemName = cartItemNames.get(i);
+            if (itemName.contains(item.getItemName())) {
+                return i;
             }
         }
+        return -1;
+    }
+
+    public ArrayList<MainItem> getCartItems() {
         return cartItems;
     }
 

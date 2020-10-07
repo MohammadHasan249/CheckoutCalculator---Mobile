@@ -10,3 +10,9 @@ How to run the app:
 	After that, review your cart of items as well as the price. If you would like to go back and change the contents of the cart, clicking the back button on your Android device will take you back to the first page where you can change the contents of your cart again.
 
 	Once you finalized the contents of the cart and are ready to pay, click the "CONFIRM CHECKOUT" button and an alert will pop-up informing you of a successful transaction.
+
+
+NOTE: For the discount, please input any one of these 4 strings for it to actually work, without the quotation marks.
+"HELLOPROFS&TAS", "PLSGIVEUS100PERCENT", "SMILEYFACE", "HAVEANICEDAY"
+
+Happy shopping :)!

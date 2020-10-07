@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/customColor"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ListView
+        android:id="@+id/listItems"
+        android:layout_width="389dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalCart" />
+
+    <TextView
+        android:id="@+id/finalCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="188dp"
+        android:text="@string/cart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:maxLines="1"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/basePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/base_price"
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/discountButton" />
+
+    <TextView
+        android:id="@+id/taxText"
+        android:layout_width="129dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/tax"
+        android:maxLines="1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/basePrice" />
+
+    <TextView
+        android:id="@+id/finalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="12dp"
+        android:text="Final Price: "
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taxText" />
+
+    <Button
+        android:id="@+id/taxButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="4dp"
+        android:onClick="taxClick"
+        android:text="@string/add_tax"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listItems" />
+
+    <Button
+        android:id="@+id/discountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/add_discount"
+        android:onClick="discountClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taxButton" />
+
+    <EditText
+        android:id="@+id/taxNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:width="40dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:maxLines="1"
+        android:hint="@string/taxPercent"
+        android:visibility="gone"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/taxButton"
+        app:layout_constraintTop_toBottomOf="@+id/listItems" />
+
+    <EditText
+        android:id="@+id/discountCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="71dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:hint="@string/enter_voucher_code"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/discountButton"
+        app:layout_constraintTop_toBottomOf="@+id/listItems" />
+
+    <Button
+        android:id="@+id/confirmCheckout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="124dp"
+        android:onClick="confirmCheckoutClick"
+        android:text="@string/confirm_checkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalPrice" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

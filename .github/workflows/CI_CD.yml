@@ -1,0 +1,30 @@
+name: CI_CD
+on: # Triggered every time a push is made to the development branch
+  push:
+    branches: [ development ]
+jobs:
+  install:
+    name: Installing necessities
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install
+        # install for next step
+        # run: install the right things
+  integration_test:
+    name: Running unit tests for CI/CD
+    runs-on: ubuntu-latest
+    needs: install # Run tests only if necessary infrastructure has been installed
+    steps:
+    - uses: actions/checkout@v2
+    - name: Testing code to be pushed
+      # run the test script
+      # run: PLACE THE TEST SCRIPT HERE
+  push_to_master:
+    name: Pushing changes to master branch
+    runs-on: ubuntu-latest
+    needs: integration_test # Push to master only if the integration test passed
+    steps:
+    - uses: actions/checkout@v2
+    - name: Pushing
+      # push to master if the test was successful
+      run: git push master https://github.com/csc301-fall-2020/assignment-1-45-MohammadHasan249-HaiderRaza7-mobile

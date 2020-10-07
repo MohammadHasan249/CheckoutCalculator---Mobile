@@ -1,16 +1,20 @@
 package com.example.checkoutpricecalculator;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MainItem> mainItems;
     MainAdapter mainAdapter;
     ArrayList<MainItem> cartItems = new ArrayList<>();
+    ArrayList<String> cartItemNames = new ArrayList<>();
+    ListView listItems;
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +74,51 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onAddButtonClick(int position, TextView textQuantity) {
-                mainItems.get(position).addToCart(textQuantity);
+                MainItem item = mainItems.get(position);
+                item.addToCart(textQuantity);
                 textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
-                updateCart();
+                updateCart(item, true);
             }
 
             @Override
             public void onRemoveButtonClick(int position, TextView textQuantity) {
-                mainItems.get(position).removeFromCart(textQuantity);
+                MainItem item = mainItems.get(position);
+                item.removeFromCart(textQuantity);
                 textQuantity.setText(String.format("Quantity: %s", mainItems.get(position).getItemQuantity()));
-                updateCart();
+                updateCart(item, false);
             }
         });
+
+        listItems = (ListView) findViewById(R.id.listItems);
+        arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, cartItemNames);
+        listItems.setAdapter(arrayAdapter);
+
     }
 
-    public void updateCart(){
-        // updates the cart shown
+    public void updateCart(MainItem item, boolean increased){
+        if (increased) {
+            cartItems.add(item);
+            if (item.getQuantity() > 1) {
+                int temp_quantity = item.getQuantity() - 1;
+                int index = cartItemNames.indexOf(item.getItemName() + " x" + temp_quantity);
+                cartItemNames.set(index, item.getItemName() + " x" + item.getItemQuantity());
+            }
+            else {
+                cartItemNames.add(item.getItemName() + " x" + item.getItemQuantity());
+            }
+        }
+        else {
+            cartItems.remove(item);
+            int temp_quantity = item.getQuantity() + 1;
+            if (item.getQuantity() > 0) {
+                int index = cartItemNames.indexOf(item.getItemName() + " x" + temp_quantity);
+                cartItemNames.set(index, item.getItemName() + " x" + item.getItemQuantity());
+            }
+            else {
+                cartItemNames.remove(item.getItemName() + " x" + temp_quantity);
+            }
+        }
+        arrayAdapter.notifyDataSetChanged();
     }
 
     public ArrayList<MainItem> getCartItems() {
@@ -108,6 +144,10 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<MainItem> itemsInCart = getCartItems();
             myIntent.putParcelableArrayListExtra("cartItems", itemsInCart);
             startActivity(myIntent);
+        }
+        else {
+            ExampleDialog exampleDialog = new ExampleDialog();
+            exampleDialog.show(getSupportFragmentManager(), "example dialog");
         }
     }
 }

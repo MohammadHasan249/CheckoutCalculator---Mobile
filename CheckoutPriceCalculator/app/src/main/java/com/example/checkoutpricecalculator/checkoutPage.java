@@ -43,12 +43,12 @@ public class checkoutPage extends AppCompatActivity {
         discountCode = (EditText) findViewById(R.id.discountCode);
         listItems = findViewById(R.id.listItems);
 
+        Intent myIntent = getIntent();
+        cartItems = myIntent.getParcelableArrayListExtra("cartItems");
+
         for (int i = 0; i < cartItems.size(); i++) {
             // add it to the listItems text
         }
-
-        Intent myIntent = getIntent();
-        cartItems = myIntent.getParcelableArrayListExtra("cartItems");
     }
 
     public void updateFinalPrice(TextView text){
@@ -67,30 +67,32 @@ public class checkoutPage extends AppCompatActivity {
         taxNumber.setVisibility(View.VISIBLE);
     }
 
+
+
     public void discountClick(View view) {
         discountCode.setVisibility(View.VISIBLE);
     }
 
+    public double getBasePrice() {
+        double price = 0.0;
+        for (int i = 0; i < cartItems.size(); i++) {
+            MainItem item = cartItems.get(i);
+            price += item.getPrice();
+        }
+        return price;
+    }
+
     // might want to change args for this to save final price properly
-    public void confirmCheckoutClick(View view, TextView final_price) {
+    // , TextView final_price
+    public void confirmCheckoutClick(View view) {
+
+        ConfirmCheckoutDialog confirmCheckoutDialog = new ConfirmCheckoutDialog();
+        confirmCheckoutDialog.show(getSupportFragmentManager(), "confirm checkout dialog");
 
         save(cartItems);
         for (int i = 0; i < cartItems.size(); i++) {
             cartItems.get(i).reset();
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Congratulations! You have bought items worth of $" + final_price.toString() + "! Thank you for shopping with us, and please come back again :)!");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-            }
-        });
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-            }
-        });
-        AlertDialog dialog = builder.create();
     }
 
     public void save(ArrayList<MainItem> mainItems){

@@ -44,7 +44,7 @@ public class MainItem implements Parcelable {
 
     public void reset(){
         itemQuantity = 0;
-        text.setText(String.format("Quantity: 0"));
+        text.setText(R.string.quantity_0);
     }
 
     public void addToCart(TextView t) {
@@ -69,6 +69,10 @@ public class MainItem implements Parcelable {
 
     public String getItemPrice() {
         return "$" + itemPrice;
+    }
+
+    public double getPrice() {
+        return itemPrice;
     }
 
     public int getQuantity() { return itemQuantity; }

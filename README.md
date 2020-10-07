@@ -15,4 +15,7 @@ How to run the app:
 NOTE: For the discount, please input any one of these 4 strings for it to actually work, without the quotation marks.
 "HELLOPROFS&TAS", "PLSGIVEUS100PERCENT", "SMILEYFACE", "HAVEANICEDAY"
 
+One last note: If you want to input your own items, then please put the logo of the images in the "drawable" folder on Android Studio, and change its name and everything in row_item.xml, etc.
+
+
 Happy shopping :)!

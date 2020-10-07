@@ -11,24 +11,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedWriter;
-import java.io.Console;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.app.AlertDialog;
-import android.widget.Toast;
-
 public class checkoutPage extends AppCompatActivity {
+
+    // All the references we will need
 
     EditText taxNumber;
     EditText discountCode;
@@ -57,27 +50,31 @@ public class checkoutPage extends AppCompatActivity {
 
         cartItemNames = new ArrayList<>();
 
+        // Get the cartItems sent from MainActivity !!
         Intent myIntent = getIntent();
         cartItems = myIntent.getParcelableArrayListExtra("cartItems");
 
+        // make sure cartItems isn't NULL, otherwise it won't run
         assert cartItems != null;
         for (int i = 0; i < cartItems.size(); i++) {
-            // add it to the listItems text
+            // add the item to the listItems view and update the base price
             MainItem item = cartItems.get(i);
-            cartItemNames.add(item.getItemName() + " x" + item.getItemQuantity());
+            cartItemNames.add(item.getItemName());
             price += item.getPrice();
         }
 
-
+        // set the updated base price and final price
         basePrice = findViewById(R.id.basePrice);
         basePrice.setText(String.format("Base Price: $%.2f", price));
         finalPrice.setText(String.format("Final Price: $%.2f", price));
 
         taxText = findViewById(R.id.taxText);
 
+        // control the listItems using this adapter
         arrayAdapter = new ArrayAdapter<>(checkoutPage.this, android.R.layout.simple_list_item_1, cartItemNames);
         listItems.setAdapter(arrayAdapter);
 
+        // let the user input a tax percentage
         taxNumber.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -87,13 +84,14 @@ public class checkoutPage extends AppCompatActivity {
                     tax = Integer.parseInt(String.valueOf(taxNumber.getText()));
                     taxText.setText(String.format("Tax: %s%%", taxNumber.getText()));
                     taxNumber.setVisibility(View.GONE);
-//                    setFinalPrice();
+                    setFinalPrice();
                     return true;
                 }
                 return false;
             }
         });
 
+        // let the user input a voucher code and see if it's valid. If it is, give the user a $100 discount
         discountCode.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -109,7 +107,7 @@ public class checkoutPage extends AppCompatActivity {
                         discount = 0.0;
                     }
                     discountCode.setVisibility(View.GONE);
-//                    setFinalPrice();
+                    setFinalPrice();
                     return true;
                 }
                 return false;
@@ -119,32 +117,32 @@ public class checkoutPage extends AppCompatActivity {
 
     }
 
+    // get final price based on tax and discount
+    @SuppressLint("DefaultLocale")
     public void setFinalPrice(){
-        // get full price, tax, and discounts from their texts or calculations
-        final_price = price * (1 - (tax / 100)) - discount;
+        final_price = price * (1 + (tax / 100)) - discount;
 
         if (final_price < 0){
             final_price = 0.0;
         }
 
-        finalPrice.setText(String.format("Final Price: %s", final_price));
+        finalPrice.setText(String.format("Final Price: $%.2f", final_price));
 
     }
 
+    // show the user where to input their tax percentage
     public void taxClick(View view) {
         taxNumber.setVisibility(View.VISIBLE);
     }
 
+    // show the user where to input the voucher code
     public void discountClick(View view) {
         discountCode.setVisibility(View.VISIBLE);
     }
 
 
-    // might want to change args for this to save final price properly
+    // reset all the quantities of items back to 0 once they've finished shopping!
     public void confirmCheckoutClick(View view) {
-
-        ConfirmCheckoutDialog confirmCheckoutDialog = new ConfirmCheckoutDialog();
-        confirmCheckoutDialog.show(getSupportFragmentManager(), "confirm checkout dialog");
 
         save(cartItems);
         for (int i = 0; i < cartItems.size(); i++) {
@@ -167,11 +165,11 @@ public class checkoutPage extends AppCompatActivity {
                 }
             }
             // get full price, tax, and final prices from texts or calculations
-            bufferedWriter.write("Base Price:" + price); // Place full price here
+            bufferedWriter.write("Base Price:" + price);
             bufferedWriter.newLine();
-            bufferedWriter.write("Tax:" + tax); // Place tax here
+            bufferedWriter.write("Tax:" + tax);
             bufferedWriter.newLine();
-            bufferedWriter.write("Final Price:" + final_price); // Place full price here
+            bufferedWriter.write("Final Price:" + final_price);
             bufferedWriter.newLine();
             bufferedWriter.write("End of transaction.");
             bufferedWriter.newLine();

@@ -1,32 +1,24 @@
 package com.example.checkoutpricecalculator;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
 
+    // All the references we will need
     RecyclerView recyclerView;
-
     ArrayList<MainItem> mainItems;
     MainAdapter mainAdapter;
     ArrayList<MainItem> cartItems = new ArrayList<>();
@@ -39,28 +31,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
+        // pictures for each item
         Integer[] itemPics = {R.drawable.realmadridjersey, R.drawable.macbookair,
                 R.drawable.samsungwatch, R.drawable.nikehoodie, R.drawable.ps5console,
                 R.drawable.boots};
 
+        // names for each item
         String[] itemNames = {"Real Madrid Jersey (Men's Football Kit)",
                 "Apple Macbook Air 19-inch 2020 Model",
                 "Samsung S3 Gear Frontier Smartwatch",
                 "Nike Tech Fleece - Tracksuit Hoodie",
                 "PS5 - Digital Edition (Pre-Order)", "Nike CR7 Mercurial Superfly Football Boots"};
 
+        // prices for each item
         double[] itemPrices = {146.99, 2824.99, 777.29, 167.99, 399.99, 209.99};
-//        String[] itemPrices = {String.valueOf(146.99), String.valueOf(2824.99), String.valueOf(777.29), String.valueOf(167.99), String.valueOf(399.99), String.valueOf(209.99)};
-        int[] itemQuantities = {0, 0, 0, 0, 0, 0};
 
+        // all the items in the store
         mainItems = new ArrayList<>();
         for (int i = 0; i < itemPics.length; i++) {
             MainItem item = new MainItem(itemPics[i], itemNames[i], itemPrices[i]);
             mainItems.add(item);
         }
 
+        // Setting the horizontal "carousel"-like items
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 MainActivity.this, LinearLayoutManager.HORIZONTAL, false
         );
@@ -89,13 +84,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listItems = (ListView) findViewById(R.id.listItems);
+        // control the listItems view using the adapter
+        listItems = findViewById(R.id.listItems);
         arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, cartItemNames);
         listItems.setAdapter(arrayAdapter);
 
     }
 
     public void updateCart(MainItem item, boolean increased){
+
+        // Check if the cart just got items added to or removed from, and change the listItems view accordingly
         if (increased) {
             cartItems.add(item);
             int index = containsItem(item);
@@ -121,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // helper function to see if item is already in the cart or not
     public int containsItem(MainItem item) {
         for (int i = 0; i < cartItemNames.size(); i++) {
             String itemName = cartItemNames.get(i);
@@ -135,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         return cartItems;
     }
 
+    // clicking the checkout button sends the user to the second page, along with the items they have in the cart
     public void checkoutClick(@NonNull View view) {
         boolean isEmpty = true;
         for(int i = 0; i < mainItems.size(); i++){
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (!isEmpty){
-            // proceed to 2nd page
+            // proceed to checkout page
             Intent myIntent = new Intent(getBaseContext(), checkoutPage.class);
             ArrayList<MainItem> itemsInCart = getCartItems();
             myIntent.putParcelableArrayListExtra("cartItems", itemsInCart);
